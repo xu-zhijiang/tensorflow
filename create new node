@@ -1,11 +1,15 @@
 create new op in tensorflow
 
 1、自己实现op所需实现的功能》》kernel
-2、REGISTER_OP告诉TensorFlow该op的接口信息：类型，input/output个数
+   **TF根据node名字选择对应的类》》调用该类型的compute方法，并传入OpKernelContext形参，实现者利用该形参可以获取input tensor数据，
+     并自己申请output tensor空间，并计算output值 
+2、REGISTER_OP告诉TensorFlow该op的接口信息：类型，input/output个数（个数可以不指定）
 3、REGISTER_KERNEL_BUILDER绑定注册的op和其kernel函数
+   **：REGISTER_KERNEL_BUILDER(Name("ZeroOut").Device(DEVICE_CPU), ZeroOutOp);通过device指定ZeroOutOp类是ZeroOut op的CPU版本
 
 note：
  1、一个op可以有多个input/output；一个in/output可以有多个tensor
  2、input的类型是可以用attr指定的
  3、attr也可以用来传递数值信息
- 4、node和node间建立链接：node创建时指定；使用edge指定
+ 4、node和node间建立链接：node创建时指定；使用edge指定；但input个数是在注册时就指定好的了
+ 5、kernel可以有多个版本，比如类型、device类型而区分》》怎么选择正确版本呢：
