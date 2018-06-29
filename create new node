@@ -1,0 +1,11 @@
+create new op in tensorflow
+
+1、自己实现op所需实现的功能》》kernel
+2、REGISTER_OP告诉TensorFlow该op的接口信息：类型，input/output个数
+3、REGISTER_KERNEL_BUILDER绑定注册的op和其kernel函数
+
+note：
+ 1、一个op可以有多个input/output；一个in/output可以有多个tensor
+ 2、input的类型是可以用attr指定的
+ 3、attr也可以用来传递数值信息
+ 4、node和node间建立链接：node创建时指定；使用edge指定
